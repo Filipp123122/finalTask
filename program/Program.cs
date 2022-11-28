@@ -15,7 +15,7 @@ string[] fillArray(int arraySize)
     for (int i = 0; i < arraySize; i++)
     {
         Console.Write($"Введите {i + 1} строку: ");
-        userArray[i] = Convert.ToString(Console.ReadLine());
+        userArray[i] = Console.ReadLine();
     }
     return userArray;
 }
@@ -25,7 +25,7 @@ void printArray(string[] incomingArray)
     Console.Write("[");
     for (int i = 0; i < incomingArray.Length; i++)
     {
-        Console.Write(incomingArray[i]);
+        Console.Write($"\"{incomingArray[i]}\"");
         if (i < incomingArray.Length - 1)
         {
             Console.Write(", ");
@@ -34,17 +34,31 @@ void printArray(string[] incomingArray)
     Console.WriteLine("]");
 }
 
-string[] ResultArray(string[] incomingArray)
+int ArraySizeLength(string[] incomingArray)
 {
-    string[] resultArray = new string[incomingArray.Length];
+    int count = 0;
     for (int i = 0; i < incomingArray.Length; i++)
     {
         if(incomingArray[i].Length <= 3)
         {
-            resultArray[i] = incomingArray[i];
+            count = count + 1;
+        }
+    }
+    return count;
+}
+
+string[] ResultArray(string[] incomingArray, int arraySize)
+{
+    string[] resultArray = new string[arraySize];
+    int j = 0;
+    for (int i = 0; i < incomingArray.Length; i++)
+    {
+        if(incomingArray[i].Length <= 3)
+        {
+            resultArray[j] = incomingArray[i];
+            j++;
         } 
     }
-    resultArray = resultArray.Where(x => !string.IsNullOrEmpty(x)).ToArray();
     return resultArray;
 }
 
@@ -53,22 +67,6 @@ int arraySize = Convert.ToInt32(Console.ReadLine());
 
 string[] userArray = fillArray(arraySize);
 printArray(userArray);
-string[] finalArray = ResultArray(userArray);
+int arrayLength = ArraySizeLength(userArray);
+string[] finalArray = ResultArray(userArray,arrayLength);
 printArray(finalArray);
-
-
-
-
-/*
-Console.Write("Введи число: ");
-int anyNumber = Convert.ToInt32(Console.ReadLine());
-string anyNumberText = Convert.ToString(anyNumber);
-if (anyNumberText.Length > 2)
-{
-    Console.WriteLine("третья цифра -> " + anyNumberText[2]);
-}
-else
-{
-    Console.WriteLine("-> третьей цифры нет");
-}
-*/
